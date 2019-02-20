@@ -1,0 +1,21 @@
+.DS_Store
+.dart_tool/
+
+.packages
+.pub/
+pubspec.lock
+
+build/
+
+.DS_Store
+.dart_tool/
+/.idea/
+.atom/
+.idea
+ios/.generated/
+
+# Directory created by dartdoc
+doc/api/
+
+# Local folder
+.local/
