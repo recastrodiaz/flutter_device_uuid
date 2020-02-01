@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:convert/convert.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -7,11 +8,42 @@ import 'package:sqflite/sqflite.dart';
 class Uuid {
   final String uuid;
 
-  Uuid(this.uuid);
+  Uuid(this.uuid)
+      : assert(uuid != null),
+        assert(uuid != '');
 
   @override
   String toString() {
     return uuid;
+  }
+
+  factory Uuid.fromBytes(List<int> bytes){
+    if (bytes?.length != 16) {
+      return null;
+    }
+
+    int i = 0;
+    String uuid = '${_toHex(bytes[i++])}${_toHex(bytes[i++])}'
+        '${_toHex(bytes[i++])}${_toHex(bytes[i++])}-'
+        '${_toHex(bytes[i++])}${_toHex(bytes[i++])}-'
+        '${_toHex(bytes[i++])}${_toHex(bytes[i++])}-'
+        '${_toHex(bytes[i++])}${_toHex(bytes[i++])}-'
+        '${_toHex(bytes[i++])}${_toHex(bytes[i++])}'
+        '${_toHex(bytes[i++])}${_toHex(bytes[i++])}'
+        '${_toHex(bytes[i++])}${_toHex(bytes[i++])}';
+    return Uuid(uuid);
+  }
+
+  static String _toHex(int byte) {
+    return hex.encode([byte]);
+  }
+
+  @override
+  int get hashCode => uuid.hashCode;
+
+  @override
+  bool operator ==(dynamic other) {
+    return other is Uuid && other.uuid == uuid;
   }
 }
 
