@@ -38,6 +38,13 @@ class Uuid {
     return hex.encode([byte]);
   }
 
+  factory Uuid.fromNullable(String? uuid) {
+    if (uuid == null) {
+      return null;
+    }
+    return Uuid(uuid);
+  }
+
   @override
   int get hashCode => uuid.hashCode;
 
